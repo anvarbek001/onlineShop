@@ -1,0 +1,53 @@
+body{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.row{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    position: relative;
+}
+
+img{
+    position: absolute;
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 100%;
+    height: 100vh;
+}
+
+.col{
+    max-width: 600px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 8px rgb(93, 93, 93);
+    border-radius: 8px;
+    padding: 20px 50px;
+}
+
+.row .col label{
+    display: block;
+}
+
+.row .col button{
+    width: 100%;
+}
+
+.form-control{
+    height: 40px;
+}
+
+.input{
+    background-color: white;
+    position: relative;
+    display: flex;
+}
+
+.input button{
+    border: none;
+    outline: none;
+    z-index: 5;
+}
