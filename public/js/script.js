@@ -1,5 +1,3 @@
-
-
 document.addEventListener("DOMContentLoaded", function () {
     let navList = document.querySelector(".nav-list");
     let btn = document.getElementById("btn");
@@ -44,5 +42,6 @@ setInterval(() => {
     index = (index + 1) % slides.length;
     updateCarousel();
 }, 3000);
+
 
 

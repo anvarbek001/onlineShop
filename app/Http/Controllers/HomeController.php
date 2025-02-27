@@ -27,8 +27,9 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $categories = Categories::all();
         $post = Post::paginate(12);
-        return view('welcome')->with('posts',$post);;
+        return view('welcome')->with('posts',$post)->with('categories',$categories);
     }
 
     public function account(){

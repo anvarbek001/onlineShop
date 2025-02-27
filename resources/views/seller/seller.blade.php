@@ -25,13 +25,13 @@
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </label>
-                <label>
+                {{-- <label>
                     Store Name <span>(The name can be empty.)</span>
                     <input class="form-control" name="StoreName" type="text" placeholder="Store Name...">
                     @error('StoreName')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
-                </label>
+                </label> --}}
                 <label>
                     Email
                     <input class="form-control" name="email" type="email" placeholder="Email..." required>

@@ -14,11 +14,31 @@ class CategoriesSeeder extends Seeder
     public function run()
     {
         $categories = [
-            ['title' => 'electronics'],
-            ['title' => 'home appliances'],
-            ['title' => 'accessories'],
-            ['title' => 'sport'],
-            ['title' => 'education'],
+            [
+                'uz' => 'elektronikalar',
+                'title' => 'electronics',
+                'ru' => 'электроника',
+            ],
+            [
+                'uz' => 'maishiy texnikalar',
+                'title' => 'home appliances',
+                'ru' => 'бытовая техника',
+            ],
+            [
+                'uz' => 'akksessuarlar',
+                'title' => 'accessories',
+                'ru' => 'аксессуары',
+            ],
+            [
+                'uz' => 'sport',
+                'title' => 'sport',
+                'ru' => 'спорт',
+            ],
+            [
+                'uz' => "ta'lim",
+                'title' => 'education',
+                'ru' => 'образование',
+            ],
         ];
 
         DB::table('categories')->insert($categories);

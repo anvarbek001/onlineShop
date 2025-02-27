@@ -97,7 +97,9 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $categories = Categories::all();
+        $post = Post::find($id);
+        return view('edit')->with('post',$post)->with('categories',$categories);
     }
 
     /**
@@ -109,7 +111,7 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // dd($request);
+
         $post = Post::findOrFail($id);
 
         $request->validate([
@@ -133,9 +135,12 @@ class PostController extends Controller
             'content' => $request->content,
             'price' => $request->price,
             'photo' => $path,
+            'category_id' => $request->category_id
         ]);
 
-        return redirect()->route('account')->with(['success'=>'Muvaffaqiyatli o\'zgartirildi','post_id' => $post->id]);
+        // dd($post);
+
+        return redirect()->route('account')->with(['success'=>'Muvaffaqiyatli o\'zgartirildi']);
     }
 
     /**
@@ -183,5 +188,20 @@ class PostController extends Controller
         }
         // JSON formatida javob qaytarish
         return response()->json($products);
+    }
+
+    public function categories($id){
+
+        $category = Categories::with('posts')->find($id);
+
+        if($category){
+            return view('categories')->with('category',$category);
+        }
+    }
+
+    public function products(){
+        $categories = Categories::all();
+        $posts = Post::paginate(12);
+        return view('products')->with('categories',$categories)->with('posts',$posts);
     }
 }

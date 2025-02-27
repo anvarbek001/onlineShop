@@ -19,6 +19,7 @@
             <input type="text" class="form-control" placeholder="Search..." required>
             <button type="button" class="add btn btn-primary" data-toggle="modal" data-target="#exampleModal">Add
                 product</button>
+            <a type="button" href=""></a>
         </div>
         @if (session('success'))
             <div class="alert alert-success mt-3">{{ session('success') }}</div>
@@ -33,15 +34,12 @@
                             </div>
                             <p><strong>{{ $post->title }}</strong></p>
                             <p>{{ $post->short_content }}</p>
+                            <p><strong>{{ $post->category->title }}</strong></p>
                             <del>{{ number_format($post->price * 2.79) }}</del>
                             <p style="margin-top: 3px; font-weight:bold;">{{ number_format($post->price) }} so'm
                             </p>
                             <div class="product-change">
-                                <a type="button" class="edit" data-toggle="modal" data-target="#editModal"
-                                    data-id="{{ $post->id }}" data-title="{{ $post->title }}"
-                                    data-short-content="{{ $post->short_content }}"
-                                    data-content="{{ $post->content }}" data-price="{{ $post->price }}"
-                                    data-photo="{{ $post->photo }}">
+                                <a type="button" class="edit" href="{{ route('edit',['id'=>$post->id]) }}">
                                     <i class="fa-solid fa-pencil"></i>
                                 </a>
                                 <form action="{{ route('destroy', ['id' => $post->id]) }}" method="POST"
@@ -137,7 +135,7 @@
 
 
     <!-- Modal -->
-    @foreach ($posts as $post)
+    {{-- @foreach ($posts as $post)
         <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
             aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -149,64 +147,42 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form id="editForm" method="POST" action="{{ route('update', ['id' => $post->id]) }}"
-                            enctype="multipart/form-data">
-                            @csrf
-                            @method('PUT')
-                            <input type="hidden" id="postId" name="id">
-                            <div class="form-group">
-                                <label for="title">Title</label>
-                                <input type="text" class="form-control" id="title" name="title">
-                            </div>
-                            <div class="form-group">
-                                <label for="short_content">Short Content</label>
-                                <textarea class="form-control" id="short_content" name="short_content"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="content">Content</label>
-                                <textarea class="form-control" id="content" rows="5" name="content"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="price">Price</label>
-                                <input type="text" class="form-control" id="price" name="price">
-                            </div>
-                            <div class="d-flex">
-                                <div class="form-group">
-                                    <label for="file-upload" class="col-form-label custom-file-upload">
-                                        <i class="fa fa-cloud-upload"></i>
-                                        Photo
-                                    </label>
-                                    <input type="file" class="form-control" name="photo" id="file-upload">
-                                </div>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Save changes</button>
-                        </form>
+
                     </div>
                 </div>
             </div>
         </div>
-    @endforeach
+    @endforeach --}}
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            $(document).on("click", ".edit", function() {
-                var id = $(this).data("id");
-                var title = $(this).data("title");
-                var content = $(this).data("content");
-                var shortContent = $(this).data("short-content");
-                var price = $(this).data("price");
-                var photo = $(this).data("photo");
+        // document.addEventListener("DOMContentLoaded", function() {
+        //     $(document).on("click", ".edit", function() {
+        //         var id = $(this).data("id");
+        //         var title = $(this).data("title");
+        //         var content = $(this).data("content");
+        //         var shortContent = $(this).data("short-content");
+        //         var price = $(this).data("price");
+        //         var category_id = $(this).data("category-id");
+        //         var photo = $(this).data("photo"); // Oldin joylangan rasm manzili
 
-                $("#postId").val(id);
-                $("#title").val(title);
-                $("#content").val(content);
-                $("#short_content").val(shortContent);
-                $("#price").val(price);
-                $("#photo").val(photo);
+        //         // Formni to'ldirish
+        //         $("#postId").val(id);
+        //         $("#title").val(title);
+        //         $("#content").val(content);
+        //         $("#short_content").val(shortContent);
+        //         $("#price").val(price);
+        //         $("#category_id").val(category_id);
 
-                $("#editForm").attr("action", "/posts/" + id);
-            });
-        });
+        //         // Oldin joylangan rasmni ko'rsatish
+        //         $("#currentPhoto").attr("src", "{{ asset('storage') }}/" + photo);
+
+        //         // Fayl inputini tozalash (agar yangi rasm yuklanmasa, oldingi rasm saqlanadi)
+        //         $("#file-upload").val("");
+
+        //         // Formning action URL ni to'g'ri o'rnatish
+        //         $("#editForm").attr("action", "{{ route('update', ['id' => 'id']) }}/" + id);
+        //     });
+        // });
 
         $('#exampleModal').on('show.bs.modal', function(event) {
             var button = $(event.relatedTarget)

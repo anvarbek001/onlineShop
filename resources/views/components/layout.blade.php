@@ -10,6 +10,13 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/btncss.css">
+    <style>
+        .list-active {
+            border-bottom: 1px solid black;
+            color: black;
+        }
+    </style>
     <title>{{ $title ?? 'BardShop' }}</title>
 </head>
 
@@ -19,14 +26,30 @@
             <h2>BadrShop</h2>
             <div class="nav-list">
                 <ul id="list">
-                    <li><a href="{{ url('/') }}">Home</a></li>
-                    <li><a href="{{ route('stores') }}">Stores</a></li>
-                    <li><a href="">Products</a></li>
-                    <form class="nav_search">
+                    <li><a href="{{ url('/') }}"><span class="home">{{ __('Bosh Sahifa') }}</span></a></li>
+                    <li><a href="{{ route('stores') }}"><span class="stores">{{ __("Do'konlar") }}</span></a></li>
+                    <li><a href="{{ route('products') }}"><span class="products">{{ __('Mahsulotlar') }}</span></a></li>
+                    <li>
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                lang
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                @foreach ($all_locales as $locale)
+                                    <a href="{{ route('locale_change', ['locale' => $locale]) }}">
+                                        {{ $locale }}
+                                    </a>
+                                @endforeach
+                            </div>
+                        </div>
+
+                    </li>
+                    {{-- <form class="nav_search">
                         <input type="text" name="q" id="search" placeholder="Search..."
                             data-search="{{ route('search') }}">
                         <i class="fa-solid fa-search"></i>
-                    </form>
+                    </form> --}}
                 </ul>
                 @if (Route::has('login'))
                     <div class="login-box">
@@ -36,13 +59,13 @@
                                     Account
                                 </a>
                             @endif
-                            <a href="{{ url('exit') }}">logout</a>
+                            <a href="{{ url('exit') }}">{{ __('Chiqish') }}</a>
                         @else
-                            <a id="a" href="{{ route('login') }}">Login</a>
+                            <a id="a" href="{{ route('login') }}">{{ __('Kirish') }}</a>
 
                             @if (Route::has('register'))
-                                <a id="a" href="{{ route('seller') }}">Seller Register</a>
-                                <a id="a" href="{{ route('register') }}">Register</a>
+                                <a id="a" href="{{ route('seller') }}">{{ __('Badr sotuvchisi') }}</a>
+                                <a id="a" href="{{ route('register') }}">{{ __("Ro'yxatdan o'tish") }}</a>
                             @endif
                         @endauth
                     </div>
@@ -53,13 +76,7 @@
                 <i class='fa-solid fa-x' id="cancel-btn"></i>
             </div>
         </div>
-        {{-- <div class="categories">
-            <ul>
-                @foreach ($categories as $category)
-                    <li>{{ $category->title }}</li>
-                @endforeach
-            </ul>
-        </div> --}}
+
         @if (session('success'))
             <div class="alert alert-primary">{{ session('success') }}</div>
         @endif
@@ -68,24 +85,24 @@
         <div class="footer">
             <div class="footer-items-list">
                 <div class="footer-item">
-                    <h6>About</h6>
-                    <a href="">vacancy</a>
+                    <h6>{{ __('Biz haqimizda') }}</h6>
+                    <a href="">{{ __('Vakansiya') }}</a>
                 </div>
                 <div class="footer-item">
-                    <h6>For entrepreneurs</h6>
-                    <a href="">Seller in Badr</a>
+                    <h6>{{ __('Tadbirkorlar uchun') }}</h6>
+                    <a href="">{{ __('Badrda sotuvchi') }}</a>
                 </div>
                 <div class="footer-item social">
-                    <h6>Social networks</h6>
+                    <h6>{{ __('Ijtimoiy tarmoqlar') }}</h6>
                     <a class="telegram" href=""><i class="fa-brands fa-telegram"></i></a>
                     <a class="instagram" href=""><i class="fa-brands fa-instagram"></i></a>
                     <a class="youtube" href=""><i class="fa-brands fa-youtube"></i></a>
                 </div>
             </div>
             <div class="footer-license">
-                <a href="">Privacy Policy</a>
-                <a href="">User Agreement</a>
-                <p>«2025© OOO «BadrShop». ИНН 309376127. All rights reserved»</p>
+                <a href="">{{ __('Maxfiylik siyosati') }}</a>
+                <a href="">{{ __('Foydalanuvchi shartnomasi') }}</a>
+                <p>«2025© OOO «BadrShop». ИНН 308376127. All rights reserved»</p>
             </div>
         </div>
         <ul id="searchResults"
@@ -102,7 +119,23 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
+    <script src="./js/script.js"></script>
     <script>
+        let navLinks = document.querySelectorAll("#list li a");
+
+        navLinks.forEach(link => {
+            link.addEventListener("click", function(e) {
+                // Barcha aktiv klasslarni o‘chirish
+                navLinks.forEach(l => l.classList.remove("list-active"));
+
+                // Bosilgan elementga aktiv klass qo‘shish
+                this.classList.add("list-active");
+
+                // Brauzerning default harakatini saqlash (sahifaga o'tish)
+                window.location.href = this.href;
+            });
+        });
+
         $(document).ready(function() {
             let searchTimeout;
 
@@ -149,7 +182,7 @@
         }, '5000');
     </script>
 
-    <script src="./js/app.js"></script>
+
 
 </body>
 
