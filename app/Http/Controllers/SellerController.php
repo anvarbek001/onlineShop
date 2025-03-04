@@ -34,7 +34,7 @@ class SellerController extends Controller
         auth()->login($user);
 
         if (auth()->attempt($credentials)) {
-            return redirect()->intended('/')->with('success', 'Sotuvchi sifatida ro\'yxatdan o\'tdingiz!');
+            return redirect()->intended('/')->with('success', __("Sotuvchi sifatida ro'yxatdan o'tdingiz!"));
         }
         return back()->withErrors(['email' => 'These credentials do not match our records.']);
     }

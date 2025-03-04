@@ -1,15 +1,21 @@
 
 .acc_nav {
-    width: 50%;
+    width: 100%;
     display: flex;
     align-items: center;
+    justify-content: center;
     margin: auto;
     padding-top: 10px;
+    gap: 20px;
 }
 
-.acc_nav .add {
+/* .acc_nav .add {
     width: 200px;
     margin: auto 10px;
+} */
+
+.acc_nav .btn-outline-primary{
+    width: 300px;
 }
 
 .products-list {
@@ -168,6 +174,10 @@
         border-radius: 10px;
         overflow: hidden;
     }
+}
+
+.nav-item{
+    list-style: none;
 }
 
 

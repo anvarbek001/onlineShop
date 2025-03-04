@@ -97,7 +97,7 @@ return [
     'all_locales' => [
         'uz',
         'en',
-        'ру',
+        'ru',
     ],
 
     /*

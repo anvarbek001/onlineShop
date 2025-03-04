@@ -8,32 +8,32 @@
         @endforeach
     </div>
     <div>
-        <div class="products-list">
+        <div class="products">
             @foreach ($posts as $post)
-                <div class="products">
-                    <div class="product-box">
-                        <div class="product-item">
-                            <a href="{{ route('posts.show', ['id' => $post->id]) }}"
-                                style="text-decoration: none; color:black;">
-                                <div class="img-box">
-                                    <img src="{{ asset('storage/' . $post->photo) }}" alt="{{ $post->title }}">
-                                </div>
-                                <div style="padding: 5px;">
-                                    <p><strong>{{ $post->title }}</strong></p>
-                                    <p>{{ $post->short_content }}</p>
-                                    <del>{{ number_format($post->price * 2.79) }} so'm</del>
-                                    <p style="margin-top: 3px; font-weight:bold;">{{ number_format($post->price) }}
-                                        so'm</p>
-                            </a>
-                            <div class="product-icons">
-                                <div class="heart"></div>
-                                <a href=""><i class="fa-solid fa-cart-shopping"></i></a>
+                <div class="product-box">
+                    <div class="product-item">
+                        <a href="{{ route('posts.show', ['id' => $post->id]) }}"
+                            style="text-decoration: none; color:black;">
+                            <div class="img-box">
+                                <img src="{{ asset('storage/' . $post->photo) }}" alt="{{ $post->title }}">
                             </div>
+                            <div style="padding: 5px;">
+                                <p><strong>{{ $post->title }}</strong></p>
+                                <p>{{ $post->short_content }}</p>
+                                <del>{{ number_format($post->price * 2.79) }} so'm</del>
+                                <p style="margin-top: 3px; font-weight:bold;">{{ number_format($post->price) }}
+                                    so'm</p>
+                            </div>
+                        </a>
+                        <div class="product-icons">
+                            <div class="heart"></div>
+                            <a href=""><i class="fa-solid fa-cart-shopping"></i></a>
                         </div>
                     </div>
+
                 </div>
+            @endforeach
         </div>
-        @endforeach
     </div>
     <div class="paginate">
         {{ $posts->links() }}

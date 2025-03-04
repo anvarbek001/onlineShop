@@ -12,16 +12,21 @@
 </head>
 
 <body>
-    <img src="./images/seller.png" alt="seller">
+    <img src="./images/store.png" alt="seller">
     <div class="row">
+        @if (@session('error'))
+            {
+            <div class="alert alert-danger">{{ @session('error') }}</div>
+            }
+        @endif
         <div class="col">
-            <div class="title">
-                <h3>{{ __("Sotuvchi sifatida ro'yxatdan o'ting") }}</h3>
+            <div class="col-item">
+                <h3>{{ __("Do'kon qo'shish") }}</h3>
                 <li>
                     <div class="dropdown">
                         <button style="border: none;" class="btn  dropdown-toggle" type="button"
                             id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {{ __("til") }}
+                            {{ __('til') }}
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             @foreach ($all_locales as $locale)
@@ -34,52 +39,33 @@
 
                 </li>
             </div>
-            <form action="{{ route('sellerRegister') }}" method="POST">
+            <form action="{{ route('storeSave') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <label>
-                    {{ __("Ism") }}
-                    <input class="form-control" name="name" type="text" placeholder="{{ __("Ism") }}..." required>
-                    @error('name')
+                    {{ __("Do'kon nomi") }}
+                    <input class="form-control" name="storeName" type="text" placeholder="{{ __("Do'kon nomi") }}..." required>
+                    @error('storeName')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </label>
                 <label>
-                    Email
-                    <input class="form-control" name="email" type="email" placeholder="Email..." required>
-                    @error('email')
+                    {{ __("Do'kon manzili") }}
+                    <textarea class="form-control" name="storeAddress" placeholder="{{ __("Do'kon manzili") }}..."></textarea>
+                    @error('storeAddress')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </label>
                 <label>
-                    {{ __("Telefon raqam") }}
-                    <input class="form-control" name="phone" type="tel" placeholder="{{ __("Telefon raqam") }}..." required>
-                    @error('phone')
+                    {{ __("Do'kon tavsifi") }}
+                    <textarea class="form-control" name="storeDescr" placeholder="{{ __("Do'kon tavsifi") }}..." required></textarea>
+                    @error('storeDescr')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </label>
                 <label>
-                    {{ __("Parol") }}
-                    <div class="input">
-                        <input id="password" class="form-control" name="password" type="password"
-                            placeholder="{{ __("Parol") }}..." required>
-                        <button type="button" onclick="togglePassword()">
-                            <i class="fas fa-eye"></i>
-                        </button>
-                    </div>
-                    @error('password')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </label>
-                <label>
-                    {{ __("Parolni tasdiqlang") }}
-                    <div class="input">
-                        <input id="password_confirmation" class="form-control" name="password_confirmation"
-                            type="password" placeholder="{{ __("Parolni tasdiqlang") }}..." required>
-                        <button type="button" onclick="togglePassword()">
-                            <i class="fas fa-eye"></i>
-                        </button>
-                    </div>
-                    @error('password_confirmation')
+                    {{ __("Do'kon rasmi") }}
+                    <input class="form-control" name="storePhoto" type="file" placeholder="{{ __("Do'kon rasmi") }}..." required>
+                    @error('storePhoto')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </label>

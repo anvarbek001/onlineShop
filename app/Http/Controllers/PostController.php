@@ -5,16 +5,19 @@ namespace App\Http\Controllers;
 use App\Categories;
 use App\Http\Controllers\Controller;
 use App\Post;
-use App\User;
-use App\UserSeller;
+use App\Store;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['index','show','stores','categories','products']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -25,7 +28,7 @@ class PostController extends Controller
         $post = Post::paginate(12);
         $categories = Categories::all();
 
-        return view('welcome')->with('posts', $post)->with('categories',$categories);
+        return view('welcome')->with('posts', $post)->with('categories', $categories);
     }
 
     /**
@@ -44,12 +47,16 @@ class PostController extends Controller
     public function store(Request $request)
     {
 
+        if (!auth()->user()->store) {
+            return redirect()->route('account')->with(['error' => __("Sizda hech qanday do'kon mavjud emas!")]);
+        }
+
 
         // 1️⃣ Fayllarni validatsiya qilish
         $request->validate([
             'title' => 'required|max:255',
-            'short_content' => 'required|max:60',
-            'content' => 'required|max:1000',
+            'short_content' => 'required',
+            'content' => 'required',
             'price' => 'required',
             'photo' => 'required|image|mimes:jpg,jpeg,png,gif|max:2048',
         ]);
@@ -62,6 +69,7 @@ class PostController extends Controller
 
         // 3️⃣ Malumotlarni saqlash
         $post = Post::create([
+            'store_id' => auth()->user()->store->id,
             'category_id' => $request->category_id,
             'title' => $request->title,
             'short_content' => $request->short_content,
@@ -73,7 +81,7 @@ class PostController extends Controller
 
 
 
-        return redirect()->route('account')->with('success', 'Post muvaffaqiyatli qo\'shildi!');
+        return redirect()->route('account')->with('success', __("Post muvaffaqiyatli qo'shildi"));
     }
 
 
@@ -99,7 +107,7 @@ class PostController extends Controller
     {
         $categories = Categories::all();
         $post = Post::find($id);
-        return view('edit')->with('post',$post)->with('categories',$categories);
+        return view('edit')->with('post', $post)->with('categories', $categories);
     }
 
     /**
@@ -122,10 +130,10 @@ class PostController extends Controller
             'photo' => 'image|mimes:jpg,jpeg,png,gif|max:2048',
         ]);
 
-        if($request->hasFile('photo')){
+        if ($request->hasFile('photo')) {
             $name = $request->file('photo')->getClientOriginalName();
-            $path = $request->file('photo')->storeAs('storage',$name,'public');
-        }else{
+            $path = $request->file('photo')->storeAs('storage', $name, 'public');
+        } else {
             $path = $post->photo;
         }
 
@@ -140,7 +148,7 @@ class PostController extends Controller
 
         // dd($post);
 
-        return redirect()->route('account')->with(['success'=>'Muvaffaqiyatli o\'zgartirildi']);
+        return redirect()->route('account')->with(['success' => __("Post muvaffaqiyatli o'zgartirildi")]);
     }
 
     /**
@@ -165,43 +173,32 @@ class PostController extends Controller
         }
         $post->delete();
 
-        return redirect()->route('account')->with(['success' => 'Muvaffaqiyatli o\'chirildi']);
+        return redirect()->route('account')->with(['success' => __("Post muvaffaqiyatli o'chirildi")]);
     }
 
 
 
     public function stores()
     {
-        return view('stores');
+        $stores = Store::all();
+
+        return view('stores')->with('stores', $stores);
     }
 
-    public function search(Request $request)
+    public function categories($id)
     {
-        // Foydalanuvchidan kelgan qidiruv matnini olish
-        if ($request->ajax()) {
-            $query = $request->input('search');
-
-            // Mahsulotlarni qidirish (name yoki description bo'yicha)
-            $products = Post::where('name', 'like', '%' . $query . '%')
-                ->orWhere('description', 'like', '%' . $query . '%')
-                ->get();
-        }
-        // JSON formatida javob qaytarish
-        return response()->json($products);
-    }
-
-    public function categories($id){
 
         $category = Categories::with('posts')->find($id);
 
-        if($category){
-            return view('categories')->with('category',$category);
+        if ($category) {
+            return view('categories')->with('category', $category);
         }
     }
 
-    public function products(){
+    public function products()
+    {
         $categories = Categories::all();
         $posts = Post::paginate(12);
-        return view('products')->with('categories',$categories)->with('posts',$posts);
+        return view('products')->with('categories', $categories)->with('posts', $posts);
     }
 }

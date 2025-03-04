@@ -29,5 +29,30 @@ class AppServiceProvider extends ServiceProvider
             $view->with('current_locale',App::getLocale());
             $view->with('all_locales',config('app.all_locales'));
         });
+
+        view()->composer('auth.login', function ($view) {
+            $view->with('current_locale',App::getLocale());
+            $view->with('all_locales',config('app.all_locales'));
+        });
+
+        view()->composer('auth.register', function ($view) {
+            $view->with('current_locale',App::getLocale());
+            $view->with('all_locales',config('app.all_locales'));
+        });
+
+        view()->composer('seller.seller', function ($view) {
+            $view->with('current_locale',App::getLocale());
+            $view->with('all_locales',config('app.all_locales'));
+        });
+
+        view()->composer('account.account', function ($view) {
+            $view->with('current_locale',App::getLocale());
+            $view->with('all_locales',config('app.all_locales'));
+        });
+
+        view()->composer('storeForm', function ($view) {
+            $view->with('current_locale',App::getLocale());
+            $view->with('all_locales',config('app.all_locales'));
+        });
     }
 }

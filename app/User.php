@@ -41,13 +41,18 @@ class User extends Authenticatable
     public function isSeller(){
         return $this->role === 'seller';
     }
-
-    public function posts(){
-        return $this->hasMany(Post::class);
+    public function store(){
+        return $this->hasOne(Store::class);
     }
 
     public function categories(){
         return $this->hasMany(Categories::class);
     }
+
+    public function posts(){
+        return $this->hasMany(Post::class);
+    }
+
+
 
 }

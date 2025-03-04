@@ -5,6 +5,8 @@ use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SellerController;
+use App\Http\Controllers\ShopCartController;
+use App\Http\Controllers\StoreController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -34,6 +36,12 @@ Route::delete('/destroy/{id}',[PostController::class,'destroy'])->name('destroy'
 Route::get('/products',[PostController::class,'products'])->name('products');
 
 Route::get('categories/{id}',[PostController::class,'categories'])->name('categories');
+
+Route::get('/addStore',[StoreController::class,'addStore'])->name('addStore');
+Route::post('/storeSave',[StoreController::class,'storeSave'])->name('storeSave');
+
+Route::get('/store-products/{id}',[StoreController::class,'storeProducts'])->name('store-products');
+Route::get('/shop-cart',[ShopCartController::class,'shopCart'])->name('shopCart');
 
 
 

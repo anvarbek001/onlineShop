@@ -16,13 +16,16 @@
             </ol>
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img class="d-block w-100" src="./images/seller.png" style="height: 300px; object-fit: cover; border-radius:15px;" alt="First slide">
+                    <img class="d-block w-100" src="./images/seller.png"
+                        style="height: 300px; object-fit: cover; border-radius:15px;" alt="First slide">
                 </div>
                 <div class="carousel-item">
-                    <img class="d-block w-100" src="./images/seller.png" style="height: 300px; object-fit: cover; border-radius:15px;" alt="Second slide">
+                    <img class="d-block w-100" src="./images/seller.png"
+                        style="height: 300px; object-fit: cover; border-radius:15px;" alt="Second slide">
                 </div>
                 <div class="carousel-item">
-                    <img class="d-block w-100" src="./images/seller.png" style="height: 300px; object-fit: cover; border-radius:15px;" alt="Third slide">
+                    <img class="d-block w-100" src="./images/seller.png"
+                        style="height: 300px; object-fit: cover; border-radius:15px;" alt="Third slide">
                 </div>
             </div>
             <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -35,38 +38,35 @@
             </a>
         </div>
     </div>
-    <div>
-        <div class="products-list">
-            @foreach ($posts as $post)
-                <div class="products">
-                    <div class="product-box">
-                        <div class="product-item">
-                            <a href="{{ route('posts.show', ['id' => $post->id]) }}"
-                                style="text-decoration: none; color:black;">
-                                <div class="img-box">
-                                    <img src="{{ asset('storage/' . $post->photo) }}" alt="{{ $post->title }}">
-                                </div>
-                                <div style="padding: 5px;">
-                                    <p><strong>{{ $post->title }}</strong></p>
-                                    <p>{{ $post->short_content }}</p>
-                                    <del>{{ number_format($post->price * 2.79) }} so'm</del>
-                                    <p style="margin-top: 3px; font-weight:bold;">{{ number_format($post->price) }}
-                                        so'm</p>
-                            </a>
-                            <div class="product-icons">
-                                <div class="heart"></div>
-                                <a href=""><i class="fa-solid fa-cart-shopping"></i></a>
-                            </div>
+    <div class="main">
+        @foreach ($posts as $post)
+            <div class="main-box">
+                <div class="main-col">
+                    <a href="{{ route('posts.show', ['id' => $post->id]) }}"
+                        style="text-decoration: none; color:black;">
+                        <div class="img-box">
+                            <img src="{{ asset('storage/' . $post->photo) }}" alt="{{ $post->title }}">
                         </div>
+                        <div style="padding: 5px;">
+                            <p><strong>{{ $post->title }}</strong></p>
+                            <p>{{ Str::limit($post->short_content, 60, '...') }}</p>
+                            <del>{{ number_format($post->price * 2.79) }} so'm</del>
+                            <p style="margin-top: 3px; font-weight:bold;">{{ number_format($post->price) }}
+                                so'm</p>
+                        </div>
+                    </a>
+                    <div class="main-icons">
+                        <div class="heart"></div>
+                        <a href=""><i class="fa-solid fa-cart-shopping"></i></a>
                     </div>
                 </div>
-        </div>
+            </div>
         @endforeach
     </div>
     <div class="paginate">
         {{ $posts->links() }}
     </div>
-    </div>
+
     <script>
         document.addEventListener("DOMContentLoaded", function(e) {
             e.preventDefault()
@@ -79,10 +79,4 @@
             });
         });
     </script>
-
-    <style>
-        .heart.active {
-            background-color: red;
-        }
-    </style>
 </x-layout>

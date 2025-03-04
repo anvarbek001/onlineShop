@@ -1,10 +1,10 @@
-body{
+body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-.row{
+.row {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -12,7 +12,7 @@ body{
     position: relative;
 }
 
-img{
+img {
     position: absolute;
     background-repeat: no-repeat;
     background-size: contain;
@@ -20,34 +20,51 @@ img{
     height: 100vh;
 }
 
-.col{
+.col {
     max-width: 600px;
     backdrop-filter: blur(10px);
     box-shadow: 0 0 8px rgb(93, 93, 93);
     border-radius: 8px;
-    padding: 20px 50px;
+    padding: 20px 45px;
 }
 
-.row .col label{
+.row .col label {
     display: block;
 }
 
-.row .col button{
+.row .col button {
     width: 100%;
 }
 
-.form-control{
+.form-control {
     height: 40px;
 }
 
-.input{
+.input {
     background-color: white;
     position: relative;
     display: flex;
 }
 
-.input button{
+.input button {
     border: none;
     outline: none;
     z-index: 5;
+}
+
+.title {
+    display: flex;
+    list-style: none;
+    justify-content: space-between;
+}
+
+.title h3{
+    font-size: 25px;
+}
+
+.col-item{
+    display: flex;
+    list-style: none;
+    align-items: center;
+    justify-content: space-between;
 }

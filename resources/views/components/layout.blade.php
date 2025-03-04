@@ -16,6 +16,10 @@
             border-bottom: 1px solid black;
             color: black;
         }
+
+        .heart.active {
+            background-color: red;
+        }
     </style>
     <title>{{ $title ?? 'BardShop' }}</title>
 </head>
@@ -31,9 +35,10 @@
                     <li><a href="{{ route('products') }}"><span class="products">{{ __('Mahsulotlar') }}</span></a></li>
                     <li>
                         <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                lang
+                            <button style="border: none;" class="btn  dropdown-toggle" type="button"
+                                id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">
+                                {{ __('til') }}
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 @foreach ($all_locales as $locale)
@@ -43,8 +48,10 @@
                                 @endforeach
                             </div>
                         </div>
-
                     </li>
+                    <div class="cart-shopping">
+                        <a href="{{ route('shopCart') }}"><i class="fa-solid fa-cart-shopping"></i></a>
+                    </div>
                     {{-- <form class="nav_search">
                         <input type="text" name="q" id="search" placeholder="Search..."
                             data-search="{{ route('search') }}">
@@ -56,7 +63,7 @@
                         @auth
                             @if (auth()->user()->role == 'seller')
                                 <a id="a" href="{{ route('account') }}">
-                                    Account
+                                    {{ __('Hisob') }}
                                 </a>
                             @endif
                             <a href="{{ url('exit') }}">{{ __('Chiqish') }}</a>
@@ -77,10 +84,13 @@
             </div>
         </div>
 
-        @if (session('success'))
-            <div class="alert alert-primary">{{ session('success') }}</div>
-        @endif
-        {{ $slot }}
+        <div>
+            @if (session('success'))
+                <div class="alert alert-primary">{{ session('success') }}</div>
+            @endif
+
+            {{ $slot }}
+        </div>
 
         <div class="footer">
             <div class="footer-items-list">
@@ -105,10 +115,10 @@
                 <p>«2025© OOO «BadrShop». ИНН 308376127. All rights reserved»</p>
             </div>
         </div>
-        <ul id="searchResults"
+        {{-- <ul id="searchResults"
             style="position:absolute; z-index:1000; background: white; list-style: none; margin-top: 10px;">
             <!-- Bu yerga natijalar kiritiladi -->
-        </ul>
+        </ul> --}}
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">

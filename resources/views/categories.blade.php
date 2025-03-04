@@ -1,11 +1,11 @@
 <x-layout>
     <div>
-        <h1>{{ $category->title }} </h1>
+        <h1 class="text-center">{{ $category->title }} </h1>
         <div>
             @foreach ($category->posts as $post)
-                <div class="products d-flex p-0 mx-4">
-                    <div class="product-box">
-                        <div class="product-item">
+                <div class="category-container">
+                    <div class="category-box">
+                        <div class="category-item">
                             <a href="{{ route('posts.show', ['id' => $post->id]) }}"
                                 style="text-decoration: none; color:black;">
                                 <div class="img-box">
@@ -18,7 +18,7 @@
                                     <p style="margin-top: 3px; font-weight:bold;">{{ number_format($post->price) }}
                                         so'm</p>
                             </a>
-                            <div class="product-icons">
+                            <div class="category-icons">
                                 <div class="heart"></div>
                                 <a href=""><i class="fa-solid fa-cart-shopping"></i></a>
                             </div>
