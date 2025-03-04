@@ -42,6 +42,7 @@ Route::post('/storeSave',[StoreController::class,'storeSave'])->name('storeSave'
 
 Route::get('/store-products/{id}',[StoreController::class,'storeProducts'])->name('store-products');
 Route::get('/shop-cart',[ShopCartController::class,'shopCart'])->name('shopCart');
+Route::delete('/store-delete/{id}',[StoreController::class,'storeDelete'])->name('storeDelete');
 
 
 

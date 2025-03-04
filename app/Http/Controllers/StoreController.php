@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Post;
 use App\Store;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class StoreController extends Controller
 {
@@ -25,7 +26,7 @@ class StoreController extends Controller
         ]);
 
         if ($request->hasFile('storePhoto')) {
-            $name = time(). '_' . $request->file('storePhoto')->getClientOriginalName();
+            $name = time() . '_' . $request->file('storePhoto')->getClientOriginalName();
             $path = $request->file('storePhoto')->storeAs('photo-store', $name, 'public');
         }
 
@@ -44,7 +45,20 @@ class StoreController extends Controller
     public function storeProducts($id)
     {
         $store = Store::find($id);
-        $posts = Post::where('store_id',$id)->get();
-        return view('storeProducts')->with('posts', $posts)->with('store' , $store);
+        $posts = Post::where('store_id', $id)->get();
+        return view('storeProducts')->with('posts', $posts)->with('store', $store);
+    }
+
+    public function storeDelete($id)
+    {
+        $store = Store::find($id);
+
+        if ($store) {
+            if (!empty($store->photo)) {
+                Storage::delete('public/' . $store->photo);
+            }
+        }
+        $store->delete();
+        return redirect()->route('stores')->with('success',"Do'kon muvaffaqiyatli o'chirildi!");
     }
 }
