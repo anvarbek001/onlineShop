@@ -11,7 +11,7 @@
             padding: 20px 0px;
         }
 
-        .box{
+        .box {
             background: rgb(224, 223, 223);
             padding: 20px;
             border-radius: 10px;
@@ -24,14 +24,16 @@
 <body>
     <div class="container">
         <div class="box">
-            <form id="editForm" method="POST" action="{{ route('update', ['id' => $post->id]) }}"
+            <form id="editForm" method="POST"
+                action="{{ route('update', ['date' => $post->created_at->format('Y-m-d'), 'slug' => $post->slug]) }}"
                 enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <input type="hidden" id="postId" name="id">
                 <div class="form-group">
                     <label for="title">Title</label>
-                    <input type="text" class="form-control" id="title" name="title" value="{{ $post->title }}">
+                    <input type="text" class="form-control" id="title" name="title"
+                        value="{{ $post->title }}">
                 </div>
                 <div class="form-group">
                     <label for="short_content">Short Content</label>
@@ -43,7 +45,8 @@
                 </div>
                 <div class="form-group">
                     <label for="price">Price</label>
-                    <input type="text" class="form-control" id="price" name="price" value="{{ $post->price }}">
+                    <input type="text" class="form-control" id="price" name="price"
+                        value="{{ $post->price }}">
                 </div>
                 <div class="form-group">
                     <select class="form-control" name="category_id">
@@ -61,7 +64,8 @@
                             <i class="fa fa-cloud-upload"></i>
                             Photo
                         </label>
-                        <input type="file" class="form-control" name="photo" id="file-upload" value="{{ $post->photo }}">
+                        <input type="file" class="form-control" name="photo" id="file-upload"
+                            value="{{ $post->photo }}">
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Save changes</button>

@@ -6,7 +6,7 @@
                 <div class="category-container">
                     <div class="category-box">
                         <div class="category-item">
-                            <a href="{{ route('posts.show', ['id' => $post->id]) }}"
+                            <a href="{{ route('posts.show', ['date'=>$post->created_at->format('Y-m-d'),'slug'=>$post->slug]) }}"
                                 style="text-decoration: none; color:black;">
                                 <div class="img-box">
                                     <img src="{{ asset('storage/' . $post->photo) }}" alt="{{ $post->title }}">

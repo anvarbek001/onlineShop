@@ -1,6 +1,7 @@
 <x-layout>
     <x-slot name="title">Product show</x-slot>
     <div class="showBox">
+        {{-- <p>Created: <span>{{ $post->created_at->format('Y-m-d') }}</span></p> --}}
         <div class="img">
             <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                 <ol class="carousel-indicators">

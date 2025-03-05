@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Post extends Model
 {
@@ -11,11 +12,12 @@ class Post extends Model
         'category_id',
         'store_id',
         'title',
+        'slug',
         'short_content',
         'content',
         'price',
         'photo',
-    ];  
+    ];
 
     public function user(){
         return $this->belongsTo(User::class);
@@ -27,5 +29,13 @@ class Post extends Model
 
     public function category(){
         return $this->belongsTo(Categories::class);
+    }
+
+    public static function boot(){
+        parent::boot();
+
+        static::creating(function($post){
+            $post->slug = Str::slug($post->title,'-');
+        });
     }
 }

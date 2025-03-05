@@ -19,6 +19,7 @@ class CreatePostsTable extends Migration
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->foreignId('store_id')->default(1)->references('id')->on('stores')->onDelete('cascade');
             $table->string('title')->default('0');
+            $table->string('slug');
             $table->string('short_content',100)->default('0');
             $table->string('content',650)->default('0');
             $table->integer('price')->default('0');

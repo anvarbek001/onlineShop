@@ -51,7 +51,8 @@
         @endif
         <div class="products-list">
             @foreach ($posts as $post)
-                <a href="{{ route('posts.show', ['id' => $post->id]) }}" style="text-decoration: none; color:black;">
+                <a href="{{ route('posts.show', ['date' => $post->created_at->format('Y-m-d'), 'slug' => $post->slug]) }}"
+                    style="text-decoration: none; color:black;">
                     <div class="products">
                         <div class="product-item">
                             <div class="img-box">
@@ -64,10 +65,13 @@
                             <p style="margin-top: 3px; font-weight:bold;">{{ number_format($post->price) }} so'm
                             </p>
                             <div class="product-change">
-                                <a type="button" class="edit" href="{{ route('edit', ['id' => $post->id]) }}">
+                                <a type="button" class="edit"
+                                    href="{{ route('edit', ['date' => $post->created_at->format('Y-m-d'), 'slug' => $post->slug]) }}">
                                     <i class="fa-solid fa-pencil"></i>
                                 </a>
-                                <form action="{{ route('destroy', ['id' => $post->id]) }}" method="POST"
+                                <form
+                                    action="{{ route('destroy', ['date' => $post->created_at->format('Y-m-d'), 'slug' => $post->slug]) }}"
+                                    method="POST"
                                     onsubmit="return confirm('Haqiqatan ham ushbu postni o\'chirmoqchimisiz?');">
                                     @csrf
                                     @method('DELETE')
@@ -130,6 +134,7 @@
                             @enderror
                         </div>
                         <div class="form-group">
+                            <label for="category_id">{{ __('Kategoriya') }}</label>
                             <select class="form-control" name="category_id">
                                 @foreach ($categories as $category)
                                     <option value="{{ $category->id }}">{{ $category->title }}</option>

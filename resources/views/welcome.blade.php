@@ -42,7 +42,7 @@
         @foreach ($posts as $post)
             <div class="main-box">
                 <div class="main-col">
-                    <a href="{{ route('posts.show', ['id' => $post->id]) }}"
+                    <a href="{{ route('posts.show', ['date' => $post->created_at->format('Y-m-d'),'slug' => $post->slug]) }}"
                         style="text-decoration: none; color:black;">
                         <div class="img-box">
                             <img src="{{ asset('storage/' . $post->photo) }}" alt="{{ $post->title }}">

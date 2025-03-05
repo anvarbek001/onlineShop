@@ -8,6 +8,8 @@ use App\Posts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use function GuzzleHttp\Promise\all;
+
 class HomeController extends Controller
 {
     /**

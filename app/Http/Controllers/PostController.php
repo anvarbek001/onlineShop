@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Categories;
 use App\Http\Controllers\Controller;
+use App\Mail\PostCreatedMail;
 use App\Post;
 use App\Store;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
@@ -15,7 +17,7 @@ class PostController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth')->except(['index','show','stores','categories','products']);
+        $this->middleware('auth')->except(['index', 'show', 'stores', 'categories', 'products']);
     }
 
     /**
@@ -81,6 +83,15 @@ class PostController extends Controller
 
 
 
+            $sellerEmail = auth()->user()->email;
+            $messageContent = ('Post yaratildi'); // Foydalanuvchining habar matni
+
+            Mail::raw($messageContent, function ($message) use ($sellerEmail) {
+                $message->to($sellerEmail) // Foydalanuvchidan kelgan email manzil
+                    ->subject('Post Yaratildi'); // Mavzu
+            });
+
+
         return redirect()->route('account')->with('success', __("Post muvaffaqiyatli qo'shildi"));
     }
 
@@ -91,9 +102,11 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($date, $slug)
     {
-        $post = Post::findOrFail($id);
+        $post = Post::whereDate('created_at', $date)
+            ->where('slug', $slug)
+            ->firstOrFail();
         return view('posts.show')->with('post', $post);
     }
 
@@ -103,10 +116,13 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($date, $slug)
     {
         $categories = Categories::all();
-        $post = Post::find($id);
+        $post = Post::whereDate('created_at', $date)
+            ->where('slug', $slug)
+            ->firstOrFail();
+
         return view('edit')->with('post', $post)->with('categories', $categories);
     }
 
@@ -117,10 +133,12 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $date, $slug)
     {
 
-        $post = Post::findOrFail($id);
+        $post = Post::whereDate('created_at', $date)
+            ->where('slug', $slug)
+            ->firstOrFail();
 
         $request->validate([
             'title' => 'required|max:255',
@@ -159,9 +177,11 @@ class PostController extends Controller
      */
 
 
-    public function destroy($id)
+    public function destroy($date, $slug)
     {
-        $post = Post::findOrFail($id);
+        $post = Post::whereDate('created_at', $date)
+            ->where('slug', $slug)
+            ->firstOrFail();
 
         if ($post) {
             // Rasm ustunlari ro'yxati

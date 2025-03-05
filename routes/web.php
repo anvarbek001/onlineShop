@@ -21,37 +21,37 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [PostController::class,'index'])->name('index');
+Route::get('/', [PostController::class, 'index'])->name('index');
 
-Route::get('/stores',[PostController::class,'stores'])->name('stores');
-Route::get('/language/{locale}',[LanguageController::class,'change_locale'])->name('locale_change');
+Route::get('/stores', [PostController::class, 'stores'])->name('stores');
+Route::get('/language/{locale}', [LanguageController::class, 'change_locale'])->name('locale_change');
 
-Route::get('/posts/show/{id}',[PostController::class,'show'])->name('posts.show');
-Route::get('/seller',[SellerController::class,'seller'])->name('seller');
-Route::post('/sellerRegister',[SellerController::class,'sellerRegister'])->name('sellerRegister');
-Route::post('/store',[PostController::class,'store'])->name('store');
-Route::get('/edit/{id}',[PostController::class,'edit'])->name('edit');
-Route::put('/update/{id}',[PostController::class,'update'])->name('update');
-Route::delete('/destroy/{id}',[PostController::class,'destroy'])->name('destroy');
-Route::get('/products',[PostController::class,'products'])->name('products');
+Route::get('/account', [HomeController::class, 'account'])->name('account');
 
-Route::get('categories/{id}',[PostController::class,'categories'])->name('categories');
+Route::get('/posts/{date}/{slug}', [PostController::class, 'show'])->name('posts.show');
+Route::get('/seller', [SellerController::class, 'seller'])->name('seller');
+Route::post('/sellerRegister', [SellerController::class, 'sellerRegister'])->name('sellerRegister');
+Route::post('/store', [PostController::class, 'store'])->name('store');
+Route::get('/edit/{date}/{slug}', [PostController::class, 'edit'])->name('edit');
+Route::put('/update', [PostController::class, 'update'])->name('update');
+Route::delete('/destroy/{date}/{slug}', [PostController::class, 'destroy'])->name('destroy');
+Route::get('/products', [PostController::class, 'products'])->name('products');
 
-Route::get('/addStore',[StoreController::class,'addStore'])->name('addStore');
-Route::post('/storeSave',[StoreController::class,'storeSave'])->name('storeSave');
+Route::get('categories/{id}', [PostController::class, 'categories'])->name('categories');
 
-Route::get('/store-products/{id}',[StoreController::class,'storeProducts'])->name('store-products');
-Route::get('/shop-cart',[ShopCartController::class,'shopCart'])->name('shopCart');
-Route::delete('/store-delete/{id}',[StoreController::class,'storeDelete'])->name('storeDelete');
+Route::get('/addStore', [StoreController::class, 'addStore'])->name('addStore');
+Route::post('/storeSave', [StoreController::class, 'storeSave'])->name('storeSave');
+
+Route::get('/store-products/{id}', [StoreController::class, 'storeProducts'])->name('store-products');
+Route::get('/shop-cart', [ShopCartController::class, 'shopCart'])->name('shopCart');
+Route::delete('/store-delete/{id}', [StoreController::class, 'storeDelete'])->name('storeDelete');
 
 
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/account',[HomeController::class,'account'])->name('account');
-Route::get('/exit',[HomeController::class,'exit'])->name('exit');
+Route::get('/exit', [HomeController::class, 'exit'])->name('exit');
 
 // routes/web.php
 Route::get('/search', [SearchController::class, 'search'])->name('search');
-
