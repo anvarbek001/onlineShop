@@ -31,6 +31,10 @@ class Post extends Model
         return $this->belongsTo(Categories::class);
     }
 
+    public function like(){
+        return $this->hasOne(Like::class);
+    }
+
     public static function boot(){
         parent::boot();
 

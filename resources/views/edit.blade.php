@@ -25,7 +25,7 @@
     <div class="container">
         <div class="box">
             <form id="editForm" method="POST"
-                action="{{ route('update', ['date' => $post->created_at->format('Y-m-d'), 'slug' => $post->slug]) }}"
+                action="{{ route('update',['id'=>$post->id]) }}"
                 enctype="multipart/form-data">
                 @csrf
                 @method('PUT')

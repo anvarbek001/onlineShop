@@ -83,13 +83,13 @@ class PostController extends Controller
 
 
 
-            $sellerEmail = auth()->user()->email;
-            $messageContent = ('Post yaratildi'); // Foydalanuvchining habar matni
+        // $sellerEmail = auth()->user()->email;
+        // $messageContent = ('Post yaratildi'); // Foydalanuvchining habar matni
 
-            Mail::raw($messageContent, function ($message) use ($sellerEmail) {
-                $message->to($sellerEmail) // Foydalanuvchidan kelgan email manzil
-                    ->subject('Post Yaratildi'); // Mavzu
-            });
+        // Mail::raw($messageContent, function ($message) use ($sellerEmail) {
+        //     $message->to($sellerEmail) // Foydalanuvchidan kelgan email manzil
+        //         ->subject('Post Yaratildi'); // Mavzu
+        // });
 
 
         return redirect()->route('account')->with('success', __("Post muvaffaqiyatli qo'shildi"));
@@ -109,6 +109,7 @@ class PostController extends Controller
             ->firstOrFail();
         return view('posts.show')->with('post', $post);
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -133,12 +134,10 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $date, $slug)
+    public function update(Request $request,$id)
     {
 
-        $post = Post::whereDate('created_at', $date)
-            ->where('slug', $slug)
-            ->firstOrFail();
+        $post = Post::find($id);
 
         $request->validate([
             'title' => 'required|max:255',

@@ -31,16 +31,18 @@ class HomeController extends Controller
     {
         $categories = Categories::all();
         $post = Post::paginate(12);
-        return view('welcome')->with('posts',$post)->with('categories',$categories);
+        return view('welcome')->with('posts', $post)->with('categories', $categories);
     }
 
-    public function account(){
-        $posts = Post::where('user_id',Auth::id())->paginate(12);
+    public function account()
+    {
+        $posts = Post::where('user_id', Auth::id())->paginate(12);
         $categories = Categories::all();
-        return view('account.account')->with('posts',$posts)->with('categories',$categories);
+        return view('account.account')->with('posts', $posts)->with('categories', $categories);
     }
 
-    public function exit(){
+    public function exit()
+    {
         Auth()->logout();
 
         return redirect()->route('index');

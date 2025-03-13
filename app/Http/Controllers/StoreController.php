@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Post;
 use App\Store;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
 class StoreController extends Controller
@@ -59,6 +60,29 @@ class StoreController extends Controller
             }
         }
         $store->delete();
-        return redirect()->route('stores')->with('success',"Do'kon muvaffaqiyatli o'chirildi!");
+        return redirect()->route('stores')->with('success', "Do'kon muvaffaqiyatli o'chirildi!");
+    }
+
+    public function email()
+    {
+        return view('email');
+    }
+
+    public function sendEmail(Request $request)
+    {
+
+
+        try {
+            $messageContent = $request->input('message'); // Foydalanuvchining habar matni
+
+            Mail::raw($messageContent, function ($message) use ($request) {
+                $message->to($request->input('email')) // Foydalanuvchidan kelgan email manzil
+                    ->subject('Test Email'); // Mavzu
+            });
+
+            return redirect()->route('account')->with(['success' => 'Email muvaffaqiyatli jo\'natildi!']);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+        }
     }
 }

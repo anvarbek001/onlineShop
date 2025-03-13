@@ -42,7 +42,7 @@
         @foreach ($posts as $post)
             <div class="main-box">
                 <div class="main-col">
-                    <a href="{{ route('posts.show', ['date' => $post->created_at->format('Y-m-d'),'slug' => $post->slug]) }}"
+                    <a href="{{ route('posts.show', ['date' => $post->created_at->format('Y-m-d'), 'slug' => $post->slug]) }}"
                         style="text-decoration: none; color:black;">
                         <div class="img-box">
                             <img src="{{ asset('storage/' . $post->photo) }}" alt="{{ $post->title }}">
@@ -56,8 +56,12 @@
                         </div>
                     </a>
                     <div class="main-icons">
-                        <div class="heart"></div>
-                        <a href=""><i class="fa-solid fa-cart-shopping"></i></a>
+                        <form action="{{ route('like', ['id', $post->id]) }}" method="POST">
+                            @csrf
+                            <div class="heart"></div>
+                        </form>
+                        <a  href=""><i
+                                class="fa-solid fa-cart-shopping"></i></a>
                     </div>
                 </div>
             </div>

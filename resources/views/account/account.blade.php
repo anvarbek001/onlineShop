@@ -21,6 +21,7 @@
             {{-- <input type="text" class="form-control" placeholder="Search..." required> --}}
             <button type="button" class="add btn btn-primary" data-toggle="modal"
                 data-target="#exampleModal">{{ __("Mahsulot qo'shish") }}</button>
+            <a href="{{ route('email') }}" type="button" class="add btn btn-primary">{{ __("Email xabar yuborish") }}</a>
             @if (auth()->user()->store == null)
                 <a type="button" class="btn btn-outline-primary"
                     href="{{ route('addStore') }}">{{ __("Do'kon qo'shish") }}</a>
@@ -66,7 +67,7 @@
                             </p>
                             <div class="product-change">
                                 <a type="button" class="edit"
-                                    href="{{ route('edit', ['date' => $post->created_at->format('Y-m-d'), 'slug' => $post->slug]) }}">
+                                    href="{{ route('edit', ['date'=>$post->created_at->format('Y-m-d'),'slug'=>$post->slug]) }}">
                                     <i class="fa-solid fa-pencil"></i>
                                 </a>
                                 <form
